@@ -18,3 +18,12 @@ footer.main-nowPlayingBar-nowPlayingBar{border-radius:14px!important}
 .main-nowPlayingBar-right,.main-nowPlayingBar-right button,.main-nowPlayingBar-right svg{opacity:.85!important;filter:none!important}
 .main-nowPlayingBar-right button:hover svg{opacity:1!important;transform:scale(1.05)!important}
 .main-nowPlayingBar-extraControls,.main-nowPlayingBar-right{gap:8px!important}
+.x-progressBar-progressBarBg{height:100%!important;--progress-bar-radius:10px!important}
+.x-progressBar-sliderArea{height:100%!important}
+.x-progressBar-sliderArea *{height:100%!important}
+.x-progressBar-fillColor{height:100%!important}
+@keyframes rotating{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.cover-art,.main-nowPlayingView-coverArtContainer::after,.main-nowPlayingView-coverArtContainer::before{animation:rotating 10s linear infinite;border-radius:50%}
+.cover-art{clip-path:circle(50% at 50% 50%)}
+.main-nowPlayingBar-left button{background:transparent}
+.main-nowPlayingView-coverArt{box-shadow:none;filter:drop-shadow(0 9px 9px rgba(0,0,0,.271))}
