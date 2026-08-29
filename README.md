@@ -41,6 +41,6 @@ The bar's background is a horizontal gradient built from `--cover-r1/g1/b1` (lef
 
 Feel free to edit the CSS template string inside `now-playing-glow.js` — it references `--cover-r1/g1/b1` and `--cover-r2/g2/b2` for the sampled colors.
 
-## License
+## Author
 
-MIT
+Honzajus
