@@ -6,6 +6,8 @@ It samples two points from the cover art (left half / right half) and exposes th
 
 ## Preview
 
+![Preview](./preview.png)
+
 The bar's background is a horizontal gradient built from `--cover-r1/g1/b1` (left) and `--cover-r2/g2/b2` (right), plus rounded corners, a subtle border, and a backdrop blur.
 
 ## Files
