@@ -30,6 +30,7 @@ The bar's background is a horizontal gradient built from `--cover-r1/g1/b1` (lef
    ```
 4. Restart Spotify.
 
+
 ## How it works
 
 - On every `songchange`, it first tries Spotify's own color API (`Spicetify.colorExtractor`).
