@@ -8,6 +8,11 @@ It samples two points from the cover art (left half / right half) and exposes th
 
 The bar's background is a horizontal gradient built from `--cover-r1/g1/b1` (left) and `--cover-r2/g2/b2` (right), plus rounded corners, a subtle border, and a backdrop blur.
 
+## Files
+
+- [`now-playing-glow.js`](./now-playing-glow.js) — the extension. It samples the cover colors, sets the CSS variables, and injects the stylesheet below on its own. This is the only file you need for the install steps.
+- [`now-playing-glow.css`](./now-playing-glow.css) — the same stylesheet as a standalone file, for reference or if you'd rather paste it into a Spicetify Marketplace custom CSS snippet instead of using the extension's auto-injection.
+
 ## Requirements
 
 - [Spicetify CLI](https://spicetify.app/docs/getting-started) installed and working (`spicetify -v`)

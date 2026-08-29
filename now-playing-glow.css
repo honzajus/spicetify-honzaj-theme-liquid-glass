@@ -1,0 +1,20 @@
+.Root__now-playing-bar,.main-nowPlayingBar-container{
+	border-radius:14px!important;
+	overflow:hidden!important;
+	margin:5px 8px!important;
+	width:calc(100% - 16px)!important;
+	background:linear-gradient(90deg,rgba(var(--cover-r1,30),var(--cover-g1,30),var(--cover-b1,30),.3),rgba(var(--cover-r2,30),var(--cover-g2,30),var(--cover-b2,30),.3))!important;
+	border:1px solid rgba(255,255,255,.08)!important;
+	box-shadow:0 4px 14px rgba(0,0,0,.3)!important;
+	backdrop-filter:blur(16px) saturate(160%)!important;
+	-webkit-backdrop-filter:blur(16px) saturate(160%)!important;
+	transition:background .6s ease!important;
+}
+footer.main-nowPlayingBar-nowPlayingBar{border-radius:14px!important}
+.main-nowPlayingBar-left .main-coverSlot-container,.main-nowPlayingBar-left .main-coverSlot-expanded,.main-nowPlayingBar-left img{
+	border-radius:8px!important;
+	box-shadow:0 2px 6px rgba(0,0,0,.25)!important;
+}
+.main-nowPlayingBar-right,.main-nowPlayingBar-right button,.main-nowPlayingBar-right svg{opacity:.85!important;filter:none!important}
+.main-nowPlayingBar-right button:hover svg{opacity:1!important;transform:scale(1.05)!important}
+.main-nowPlayingBar-extraControls,.main-nowPlayingBar-right{gap:8px!important}
