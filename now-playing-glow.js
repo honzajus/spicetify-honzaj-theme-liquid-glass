@@ -7,6 +7,13 @@
 	const style = document.createElement("style");
 	style.id = "now-playing-glow-style";
 	style.textContent = `
+@property --cover-r1{syntax:'<number>';inherits:true;initial-value:30}
+@property --cover-g1{syntax:'<number>';inherits:true;initial-value:30}
+@property --cover-b1{syntax:'<number>';inherits:true;initial-value:30}
+@property --cover-r2{syntax:'<number>';inherits:true;initial-value:30}
+@property --cover-g2{syntax:'<number>';inherits:true;initial-value:30}
+@property --cover-b2{syntax:'<number>';inherits:true;initial-value:30}
+:root{transition:--cover-r1 .6s ease,--cover-g1 .6s ease,--cover-b1 .6s ease,--cover-r2 .6s ease,--cover-g2 .6s ease,--cover-b2 .6s ease}
 .Root__now-playing-bar,.main-nowPlayingBar-container{
 	border-radius:14px!important;
 	overflow:hidden!important;
@@ -17,7 +24,6 @@
 	box-shadow:0 4px 14px rgba(0,0,0,.3)!important;
 	backdrop-filter:blur(16px) saturate(160%)!important;
 	-webkit-backdrop-filter:blur(16px) saturate(160%)!important;
-	transition:background .6s ease!important;
 }
 footer.main-nowPlayingBar-nowPlayingBar{border-radius:14px!important}
 .main-nowPlayingBar-left .main-coverSlot-container,.main-nowPlayingBar-left .main-coverSlot-expanded,.main-nowPlayingBar-left img{
@@ -27,21 +33,27 @@ footer.main-nowPlayingBar-nowPlayingBar{border-radius:14px!important}
 .main-nowPlayingBar-right,.main-nowPlayingBar-right button,.main-nowPlayingBar-right svg{opacity:.85!important;filter:none!important}
 .main-nowPlayingBar-right button:hover svg{opacity:1!important;transform:scale(1.05)!important}
 .main-nowPlayingBar-extraControls,.main-nowPlayingBar-right{gap:8px!important}
+.main-nowPlayingBar-right{padding-right:8px!important}
 .x-progressBar-progressBarBg{height:100%!important;--progress-bar-radius:10px!important}
 .x-progressBar-sliderArea{height:100%!important}
 .x-progressBar-sliderArea *{height:100%!important}
 .x-progressBar-fillColor{height:100%!important}
 @keyframes rotating{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.cover-art,.main-nowPlayingView-coverArtContainer::after,.main-nowPlayingView-coverArtContainer::before{animation:rotating 10s linear infinite;border-radius:50%}
-.cover-art{clip-path:circle(50% at 50% 50%)}
+.cover-art:not(.cover-art-square){animation:rotating 10s linear infinite;border-radius:50%;clip-path:circle(50% at 50% 50%)}
 .main-nowPlayingBar-left button{background:transparent}
 .main-nowPlayingView-coverArt{box-shadow:none;filter:drop-shadow(0 9px 9px rgba(0,0,0,.271))}
 `;
 
+	let appendScheduled = false;
 	function keepStyleLast() {
-		if (document.body.lastElementChild !== style) {
-			document.body.appendChild(style);
-		}
+		if (appendScheduled) return;
+		appendScheduled = true;
+		requestAnimationFrame(() => {
+			appendScheduled = false;
+			if (document.body.lastElementChild !== style) {
+				document.body.appendChild(style);
+			}
+		});
 	}
 	keepStyleLast();
 	new MutationObserver(keepStyleLast).observe(document.body, { childList: true });
@@ -54,10 +66,54 @@ footer.main-nowPlayingBar-nowPlayingBar{border-radius:14px!important}
 		return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 	}
 
+	function rgbToHsl(r, g, b) {
+		r /= 255;
+		g /= 255;
+		b /= 255;
+		const max = Math.max(r, g, b), min = Math.min(r, g, b);
+		let h = 0;
+		let s = 0;
+		const l = (max + min) / 2;
+		const d = max - min;
+		if (d !== 0) {
+			s = d / (1 - Math.abs(2 * l - 1));
+			switch (max) {
+				case r: h = ((g - b) / d) % 6; break;
+				case g: h = (b - r) / d + 2; break;
+				default: h = (r - g) / d + 4; break;
+			}
+			h *= 60;
+			if (h < 0) h += 360;
+		}
+		return [h, s, l];
+	}
+
+	function hslToRgb(h, s, l) {
+		const c = (1 - Math.abs(2 * l - 1)) * s;
+		const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+		const m = l - c / 2;
+		let r = 0, g = 0, b = 0;
+		if (h < 60) [r, g, b] = [c, x, 0];
+		else if (h < 120) [r, g, b] = [x, c, 0];
+		else if (h < 180) [r, g, b] = [0, c, x];
+		else if (h < 240) [r, g, b] = [0, x, c];
+		else if (h < 300) [r, g, b] = [x, 0, c];
+		else [r, g, b] = [c, 0, x];
+		return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
+	}
+
+	function normalizeColor(r, g, b) {
+		const [h, s, l] = rgbToHsl(r, g, b);
+		const boostedS = Math.max(s, 0.45);
+		const clampedL = Math.min(Math.max(l, 0.28), 0.55);
+		return hslToRgb(h, boostedS, clampedL);
+	}
+
 	function setPoint(suffix, r, g, b) {
-		document.documentElement.style.setProperty(`--cover-r${suffix}`, r);
-		document.documentElement.style.setProperty(`--cover-g${suffix}`, g);
-		document.documentElement.style.setProperty(`--cover-b${suffix}`, b);
+		const [nr, ng, nb] = normalizeColor(r, g, b);
+		document.documentElement.style.setProperty(`--cover-r${suffix}`, nr);
+		document.documentElement.style.setProperty(`--cover-g${suffix}`, ng);
+		document.documentElement.style.setProperty(`--cover-b${suffix}`, nb);
 	}
 
 	function getCoverUrl(item) {
@@ -105,6 +161,7 @@ footer.main-nowPlayingBar-nowPlayingBar{border-radius:14px!important}
 	}
 
 	async function update() {
+		keepStyleLast();
 		const item = Spicetify.Player.data?.item;
 		if (!item) return;
 
