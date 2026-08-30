@@ -42,6 +42,13 @@ footer.main-nowPlayingBar-nowPlayingBar{border-radius:14px!important}
 .cover-art:not(.cover-art-square){animation:rotating 10s linear infinite;border-radius:50%;clip-path:circle(50% at 50% 50%)}
 .main-nowPlayingBar-left button{background:transparent}
 .main-nowPlayingView-coverArt{box-shadow:none;filter:drop-shadow(0 9px 9px rgba(0,0,0,.271))}
+.main-navBar-navBar > :nth-child(3){margin:0 0 0 1px;border-radius:6px}
+.cover-art-image,.artist-artistOverview-sideBlock > div > section > div:nth-child(3) > section:nth-child(2) > div > img,.view-homeShortcutsGrid-image{border-radius:4px}
+.X6NnaANU7oS1TJpc,.main-entityHeader-shadow,.x-categoryCard-image,.x-entityImage-circle,.main-image-image,.kwzBRpFigKr1EP2d5qle,.lKuMkIKSZanMIK6aQWfx,.main-cardImage-image,.main-cardImage-imageWrapper,.main-entityHeader-imagePlaceholder > div,.artist-artistOverview-sideBlock > div > section{border-radius:6px}
+.main-cardImage-circular,.main-entityHeader-imagePlaceholder,.main-entityHeader-circle{border-radius:50%!important}
+.main-trackList-rowImage{border-radius:3px}
+.view-homeShortcutsGrid-image,.view-homeShortcutsGrid-imageWrapper{border-radius:4px!important}
+.T_JcGdJujSuj014SZfjl{border-radius:20%!important}
 `;
 
 	let appendScheduled = false;
