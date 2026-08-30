@@ -37,7 +37,7 @@ The bar's background is a horizontal gradient built from `--cover-r1/g1/b1` (lef
 
 - On every `songchange`, it first tries Spotify's own color API (`Spicetify.colorExtractor`).
 - If that's unavailable, it falls back to sampling the cover art directly via `<canvas>`.
-- Sampled colors are boosted in HSL space (minimum saturation and a clamped lightness range) before being applied, so the gradient stays readable instead of collapsing into near-black or near-white for muted covers.
+- Sampled colors are converted to HSL and only the lightness is clamped to a visible range, so the gradient stays legible without inventing hue that isn't in the cover (a grayscale cover stays gray instead of turning brown).
 - The resulting colors are written to `--cover-r1`, `--cover-g1`, `--cover-b1`, `--cover-r2`, `--cover-g2`, `--cover-b2` on `<html>`, registered via `@property` so the browser smoothly interpolates the gradient between tracks instead of snapping.
 - Those variables are used by an injected stylesheet that styles `.Root__now-playing-bar`. The stylesheet is kept as the last element in `<body>` (via a `requestAnimationFrame`-debounced `MutationObserver`), so it reliably wins over other installed Spicetify Marketplace CSS snippets that target the same selectors, without the debounce it'd cause jank on every unrelated DOM change.
 - The circular rotating-cover-art effect only targets the mini cover in the now-playing bar (`.cover-art:not(.cover-art-square)`) — it deliberately excludes the bigger cover art shown in the right-hand Now Playing / queue panel.

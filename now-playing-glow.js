@@ -104,9 +104,8 @@ footer.main-nowPlayingBar-nowPlayingBar{border-radius:14px!important}
 
 	function normalizeColor(r, g, b) {
 		const [h, s, l] = rgbToHsl(r, g, b);
-		const boostedS = Math.max(s, 0.45);
-		const clampedL = Math.min(Math.max(l, 0.28), 0.55);
-		return hslToRgb(h, boostedS, clampedL);
+		const clampedL = Math.min(Math.max(l, 0.12), 0.62);
+		return hslToRgb(h, s, clampedL);
 	}
 
 	function setPoint(suffix, r, g, b) {
