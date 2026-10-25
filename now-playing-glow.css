@@ -5,7 +5,7 @@
 @property --cover-g2{syntax:'<number>';inherits:true;initial-value:30}
 @property --cover-b2{syntax:'<number>';inherits:true;initial-value:30}
 :root{transition:--cover-r1 .6s ease,--cover-g1 .6s ease,--cover-b1 .6s ease,--cover-r2 .6s ease,--cover-g2 .6s ease,--cover-b2 .6s ease}
-.Root__now-playing-bar,.main-nowPlayingBar-container{
+.Root__now-playing-bar,.main-nowPlayingBar-container,[data-testid="now-playing-bar"]{
 	border-radius:14px!important;
 	overflow:hidden!important;
 	margin:5px 8px!important;
@@ -16,12 +16,12 @@
 	backdrop-filter:blur(16px) saturate(160%)!important;
 	-webkit-backdrop-filter:blur(16px) saturate(160%)!important;
 }
-footer.main-nowPlayingBar-nowPlayingBar{border-radius:14px!important}
-.main-nowPlayingBar-left .main-coverSlot-container,.main-nowPlayingBar-left .main-coverSlot-expanded,.main-nowPlayingBar-left img{
+footer.main-nowPlayingBar-nowPlayingBar,[data-testid="now-playing-bar"]{border-radius:14px!important}
+.main-nowPlayingBar-left .main-coverSlot-container,.main-nowPlayingBar-left .main-coverSlot-expanded,.main-nowPlayingBar-left img,[data-testid="now-playing-widget-v2"] img{
 	border-radius:8px!important;
 	box-shadow:0 2px 6px rgba(0,0,0,.25)!important;
 }
-.main-nowPlayingBar-right,.main-nowPlayingBar-right button,.main-nowPlayingBar-right svg{opacity:.85!important;filter:none!important}
+.main-nowPlayingBar-right,.main-nowPlayingBar-right button,.main-nowPlayingBar-right svg,[data-testid="volume-bar"],[data-testid="lyrics-button"],[data-testid="pip-toggle-button"],[data-testid="fullscreen-mode-button"]{opacity:.85!important;filter:none!important}
 .main-nowPlayingBar-right button:hover svg{opacity:1!important;transform:scale(1.05)!important}
 .main-nowPlayingBar-extraControls,.main-nowPlayingBar-right{gap:8px!important}
 .main-nowPlayingBar-right{padding-right:8px!important}
